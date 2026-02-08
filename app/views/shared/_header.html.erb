@@ -1,0 +1,52 @@
+<!-- STICKY MENU STRIP ONLY -->
+<div class="ee-topbar" role="banner">
+  <div class="ee-topbar-inner">
+    <nav class="ee-topbar-nav" aria-label="Головне меню">
+      <a href="#about">Про систему</a>
+      <a href="#method">Методика</a>
+      <a href="#research">Дослідження</a>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO (NOT STICKY) -->
+<header class="ee-hero-header" id="top">
+  <div class="ee-hero-center">
+    <%= image_tag "logo.png", class: "ee-hero-logo", alt: "ElearnEval" %>
+
+    <div class="ee-hero-tagline">
+      Система оцінки якості навчального контенту<br>
+      в парадигмі онлайн-навчання
+    </div>
+  </div>
+
+  <div class="ee-hero-scroll" aria-hidden="true">
+    <span>Прокрутіть вниз</span>
+    <i></i>
+  </div>
+</header>
+
+<!-- Back to top button -->
+<button id="backToTop" class="ee-back-to-top" type="button" aria-label="Повернутися вгору">↑</button>
+
+<script>
+  (function () {
+    const topbar = document.querySelector(".ee-topbar");
+    const btn = document.getElementById("backToTop");
+
+    const onScroll = () => {
+      const scrolled = window.scrollY > 10;
+      if (topbar) topbar.classList.toggle("is-solid", scrolled);
+
+      const showBtn = window.scrollY > 380;
+      if (btn) btn.classList.toggle("is-visible", showBtn);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    if (btn) {
+      btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    }
+  })();
+</script>

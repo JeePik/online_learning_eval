@@ -1,0 +1,210 @@
+/* landing.css — ТІЛЬКИ контент (без hero/nav), щоб не конфліктувати */
+
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section{
+  margin-top: 22px;
+}
+
+/* Typography */
+h1,h2,h3{
+  font-family: "Merriweather", serif;
+  margin: 0 0 12px;
+  letter-spacing: .2px;
+}
+
+p{ margin: 0 0 10px; }
+
+/* Cards */
+.card{
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px;
+  margin: 18px 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  border: 1px solid rgba(17,24,39,0.06);
+}
+
+.card-title{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.muted{
+  color:#6b7280;
+  font-size: 13px;
+}
+
+/* Upload box */
+.upload-box{
+  border: 2px dashed #d1d5db;
+  padding: 26px;
+  text-align: center;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.upload-box:hover{ border-color:#2563eb; }
+
+/* Buttons */
+.btn{
+  background: #2563eb;
+  color:#fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.btn:hover{ background:#1d4ed8; }
+
+.btn-secondary{
+  background: #111827;
+}
+.btn-secondary:hover{ background:#0b1220; }
+
+/* Table styling */
+.data-table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.data-table th{
+  background:#2563eb;
+  color:#fff;
+  font-weight: 700;
+  padding: 12px;
+  text-align:center;
+  font-size: 13px;
+}
+
+.data-table td{
+  padding: 10px 12px;
+  text-align:center;
+  font-size: 14px;
+  border-top: 1px solid #eef2f7;
+}
+
+.data-table tr:nth-child(even) td{ background:#f8fafc; }
+.data-table tr:hover td{ background:#eef2ff; transition: .15s; }
+
+/* Table scroll on small screens */
+.table-wrap{
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+/* Badges / numbers */
+.kpi{
+  display:flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.kpi .value{
+  font-size: 36px;
+  font-weight: 800;
+  color:#2563eb;
+  line-height: 1;
+}
+
+.kpi .label{
+  color:#6b7280;
+  font-size: 14px;
+}
+
+/* Charts */
+.chart-box{
+  background:#f8fafc;
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+}
+
+.chart-box svg{
+  border-radius: 14px;
+}
+
+.chart-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 980px){
+  .chart-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Anchor spacing (so menu doesn't hide headings) */
+.anchor{
+  scroll-margin-top: 24px;
+}
+
+/* Lists in "About / Method" blocks */
+.bullets{
+  margin: 10px 0 0 18px;
+  color:#374151;
+}
+
+.bullets li{
+  margin: 6px 0;
+}
+
+/* Pills for indicator names */
+.pill-grid{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill{
+  background:#eef2ff;
+  color:#1d4ed8;
+  border: 1px solid #c7d2fe;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* SVG схема оцінювання */
+svg .bx {
+  fill: #ffffff;
+  stroke: #2563eb;
+  stroke-width: 2;
+  rx: 16;
+  ry: 16;
+}
+
+svg .title {
+  font-size: 14px;
+  font-weight: 600;
+  fill: #1e293b;
+}
+
+svg .text {
+  font-size: 13px;
+  fill: #334155;
+}
+
+/* підстраховка: якщо десь секції мають class="section" */
+.section { scroll-margin-top: calc(64px + 18px); }
+

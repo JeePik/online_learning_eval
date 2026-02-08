@@ -1,0 +1,468 @@
+<div class="container">
+
+  <!-- ПРО СИСТЕМУ -->
+ <section class="section" id="about">
+  <div class="card">
+    <div class="card-title">
+      <h2>Про систему</h2>
+      <div class="muted">
+        ElearnEval — система підтримки оцінювання ефективності організації електронного навчального процесу
+      </div>
+    </div>
+
+    <p>
+      У межах дисертаційного дослідження ElearnEval реалізує прикладний інструментарій для
+      <strong>збору, нормалізації та агрегування дидактичних показників</strong> з метою отримання
+      <strong>узагальненого дидактичного показника якості/ефективності</strong> електронного навчального процесу.
+      Підхід ґрунтується на ідеї, що оцінка якості організації навчального заняття (компонента е-НП)
+      дозволяє оцінити якість застосування відповідних технологій дистанційного/електронного навчання.
+    </p>
+
+    <div class="kpi" style="margin-top:14px;">
+      <div class="label"><strong>Функції системи (за логікою Розділу II):</strong></div>
+    </div>
+
+    <ul class="bullets">
+      <li><strong>Збір даних</strong>: імпорт емпіричних значень показників (CSV) по заняттях/модулях/курсу.</li>
+      <li><strong>Нормалізація</strong>: приведення показників до порівнюваного вигляду у діапазоні 0..1.</li>
+      <li><strong>Агрегування</strong>: формування узагальненого показника якості (D) за інтегральною схемою.</li>
+      <li><strong>Візуалізація</strong>: представлення результатів для інтерпретації та прийняття рішень.</li>
+      <li><strong>Підтримка зворотного зв’язку</strong>: підготовка основи для висновків щодо модифікації курсу/модуля.</li>
+    </ul>
+
+    <div class="chart-box" style="margin-top:18px;">
+      <h3 style="margin-bottom:12px;">Загальна схема оцінювання ефективності е-НП</h3>
+
+      <!-- SVG: 3 етапи оцінювання результатів е-НП (з Розділу II) -->
+      <svg viewBox="0 0 980 240" width="100%" height="240" role="img" aria-label="Схема оцінювання: результати → метрики → зворотний зв’язок → рішення">
+<!-- Блок 1 -->
+<rect class="bx" x="30" y="60" width="260" height="120"></rect>
+
+<text x="160" y="120"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="title">
+  <tspan x="160" dy="-36">Етап 1</tspan>
+  <tspan x="160" dy="18">Навчальні результати</tspan>
+</text>
+
+<text x="160" y="120"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="text">
+  <tspan x="160" dy="18">До / після навчання</tspan>
+  <tspan x="160" dy="16">проміжні та фінальні</tspan>
+  <tspan x="160" dy="16">завдання, тестування</tspan>
+</text>
+
+<!-- Стрілка -->
+<line x1="290" y1="120" x2="350" y2="120"
+      stroke="#2563eb" stroke-width="2"/>
+<polygon points="350,120 340,114 340,126"
+         fill="#2563eb"/>
+
+
+<!-- Блок 2 -->
+<rect class="bx" x="350" y="60" width="260" height="120"></rect>
+
+<text x="480" y="120"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="title">
+  <tspan x="480" dy="-36">Етап 2</tspan>
+  <tspan x="480" dy="18">Розрахунок метрик</tspan>
+</text>
+
+<text x="480" y="120"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="text">
+  <tspan x="480" dy="18">CSA / CSI / COR / NPS</tspan>
+  <tspan x="480" dy="16">нормалізація</tspan>
+  <tspan x="480" dy="16">та агрегування</tspan>
+</text>
+
+<line x1="610" y1="120" x2="670" y2="120"
+      stroke="#2563eb" stroke-width="2"/>
+<polygon points="670,120 660,114 660,126"
+         fill="#2563eb"/>
+
+
+
+<!-- Блок 3 -->
+<rect class="bx" x="670" y="60" width="220" height="120"></rect>
+
+<text x="780" y="120"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="title">
+  <tspan x="780" dy="-36">Етап 3</tspan>
+  <tspan x="780" dy="18">Зворотний звʼязок</tspan>
+</text>
+
+<text x="780" y="120"
+      text-anchor="middle"
+      dominant-baseline="middle"
+      class="text">
+  <tspan x="780" dy="18">Рішення експертів</tspan>
+  <tspan x="780" dy="16">залишити / змінити</tspan>
+  <tspan x="780" dy="16">або прибрати елемент</tspan>
+</text>
+
+      </svg>
+
+      <p class="muted" style="margin-top:10px;">
+        Схема відповідає послідовності дій оцінювання ефективності е-НП:
+        результати → метрики → механізм зворотного зв’язку → управлінське рішення щодо курсу/модуля.
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:16px; background:#f8fafc;">
+      <h3 style="margin-bottom:10px;">Ролі суб’єктів оцінювання</h3>
+      <ul class="bullets">
+        <li><strong>Студент</strong>: ефективність як досягнення навчальної мети.</li>
+        <li><strong>Тьютор/адміністратор</strong>: вимірювані зміни установок/поведінки, інтенсивність та результати.</li>
+        <li><strong>Освітня установа</strong>: співвідношення ресурсів і отриманої вигоди/результативності процесу.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+  <!-- МЕТОДИКА -->
+<section class="section" id="method">
+  <div class="card">
+    <div class="card-title">
+      <h2>Методика</h2>
+      <div class="muted">
+        Метод оцінки ефективності е-НП на основі елементарних дидактичних показників та узагальненого показника якості
+      </div>
+    </div>
+
+    <p>
+      Методика орієнтована на оцінювання якості електронного навчального процесу на різних етапах його життєвого циклу,
+      включаючи проектування, проведення заняття та контроль результатів. Для цього використовується набір
+      <strong>критеріїв якості</strong> (придатності, оптимальності, переваги) та група
+      <strong>елементарних дидактичних показників</strong>, які приводяться до безрозмірного вигляду,
+      після чого агрегуються в <strong>узагальнений показник</strong> (D).
+    </p>
+
+    <div class="chart-grid" style="margin-top:16px;">
+      <div class="chart-box">
+        <h3 style="margin-bottom:12px;">Життєвий цикл електронного заняття</h3>
+
+        <!-- SVG: 3 етапи електронного заняття -->
+        <svg viewBox="0 0 980 190" width="100%" height="190" role="img" aria-label="Підготовка → Проведення → Контроль результатів">
+          <defs>
+            <style>
+              .bx{fill:#fff;stroke:#11182722;stroke-width:1.3;rx:14;ry:14}
+              .hd{font:700 15px Inter, sans-serif;fill:#111827}
+              .tx{font:400 13px Inter, sans-serif;fill:#6b7280}
+              .ar{stroke:#2563eb;stroke-width:2.2;marker-end:url(#m2)}
+              .tag{fill:#2563eb}
+              .tagt{font:700 12px Inter, sans-serif;fill:#fff}
+            </style>
+            <marker id="m2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6" fill="#2563eb" />
+            </marker>
+          </defs>
+
+          <rect class="bx" x="60"  y="55" width="250" height="100"></rect>
+          <rect class="bx" x="365" y="55" width="250" height="100"></rect>
+          <rect class="bx" x="670" y="55" width="250" height="100"></rect>
+
+          <line class="ar" x1="310" y1="105" x2="365" y2="105"></line>
+          <line class="ar" x1="615" y1="105" x2="670" y2="105"></line>
+
+          <rect class="tag" x="60" y="35" width="95" height="22" rx="10"></rect>
+          <text class="tagt" x="73" y="51">Етап 1</text>
+
+          <rect class="tag" x="365" y="35" width="95" height="22" rx="10"></rect>
+          <text class="tagt" x="378" y="51">Етап 2</text>
+
+          <rect class="tag" x="670" y="35" width="95" height="22" rx="10"></rect>
+          <text class="tagt" x="683" y="51">Етап 3</text>
+
+          <text class="hd" x="80" y="88">Підготовка</text>
+          <text class="tx" x="80" y="112">план, контент,</text>
+          <text class="tx" x="80" y="132">умови проведення</text>
+
+          <text class="hd" x="385" y="88">Проведення</text>
+          <text class="tx" x="385" y="112">взаємодія, подача</text>
+          <text class="tx" x="385" y="132">матеріалу, активність</text>
+
+          <text class="hd" x="690" y="88">Контроль результатів</text>
+          <text class="tx" x="690" y="112">перевірка, зворотний</text>
+          <text class="tx" x="690" y="132">зв’язок, оцінювання</text>
+        </svg>
+
+        <p class="muted" style="margin-top:10px;">
+          Оцінювання якості компонента е-НП виконується по всіх етапах заняття: підготовка → проведення → контроль.
+        </p>
+      </div>
+
+      <div class="chart-box">
+        <h3 style="margin-bottom:12px;">Елементарні дидактичні показники (табл. 2.5)</h3>
+
+        <div class="pill-grid">
+          <span class="pill">Контентне наповнення</span>
+          <span class="pill">Часові витрати</span>
+          <span class="pill">Ресурсні витрати</span>
+          <span class="pill">Середній бал</span>
+          <span class="pill">Науковість</span>
+          <span class="pill">Складність</span>
+          <span class="pill">Прикладна компонента</span>
+          <span class="pill">Засвоєння</span>
+          <span class="pill">Активність</span>
+          <span class="pill">Зацікавленість</span>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Саме ці показники використовуються як основа для побудови узагальненого дидактичного показника якості.
+        </p>
+      </div>
+    </div>
+
+    <div class="chart-box" style="margin-top:18px;">
+      <h3 style="margin-bottom:12px;">Нормалізація та агрегування в узагальнений показник (D)</h3>
+
+      <div class="chart-box" style="margin-top:18px;">
+  <h3 style="margin-bottom:12px;">Крива бажаності Харрінгтона</h3>
+
+  <p class="muted" style="margin-bottom:12px;">
+    Крива ілюструє перехід від значення показника <strong>x</strong> (у вибраній шкалі)
+    до безрозмірної оцінки бажаності <strong>d(x)</strong> у діапазоні <strong>[0; 1]</strong>.
+    Після нормалізації всі показники стають порівнюваними та можуть агрегуватися в інтегральний показник <strong>D</strong>.
+  </p>
+
+  <!-- SVG: Harrington desirability curve (illustrative) -->
+  <svg viewBox="0 0 980 340" width="100%" height="340" role="img" aria-label="Крива бажаності Харрінгтона d(x)">
+    <defs>
+      <style>
+        .axis{stroke:#cbd5e1;stroke-width:2}
+        .grid{stroke:#e5e7eb;stroke-width:1}
+        .lbl{font:600 12px Inter, sans-serif;fill:#374151}
+        .mut{font:400 12px Inter, sans-serif;fill:#6b7280}
+        .curve{fill:none;stroke:#2563eb;stroke-width:4}
+        .pt{fill:#2563eb}
+        .band{fill:#f8fafc;stroke:#e5e7eb;stroke-width:1.2;rx:12;ry:12}
+        .tag{font:600 12px Inter, sans-serif;fill:#111827}
+      </style>
+    </defs>
+
+    <!-- Plot area -->
+    <!-- margins: left 80, right 30, top 20, bottom 70 -->
+    <rect x="80" y="20" width="870" height="240" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.2" rx="14" ry="14"/>
+
+    <!-- Grid (horizontal) -->
+    <line class="grid" x1="80" y1="68" x2="950" y2="68"/>
+    <line class="grid" x1="80" y1="116" x2="950" y2="116"/>
+    <line class="grid" x1="80" y1="164" x2="950" y2="164"/>
+    <line class="grid" x1="80" y1="212" x2="950" y2="212"/>
+
+    <!-- Grid (vertical) -->
+    <line class="grid" x1="210" y1="20" x2="210" y2="260"/>
+    <line class="grid" x1="340" y1="20" x2="340" y2="260"/>
+    <line class="grid" x1="470" y1="20" x2="470" y2="260"/>
+    <line class="grid" x1="600" y1="20" x2="600" y2="260"/>
+    <line class="grid" x1="730" y1="20" x2="730" y2="260"/>
+    <line class="grid" x1="860" y1="20" x2="860" y2="260"/>
+
+    <!-- Axes -->
+    <line class="axis" x1="80" y1="260" x2="950" y2="260"/>
+    <line class="axis" x1="80" y1="20"  x2="80"  y2="260"/>
+
+    <!-- Axis labels -->
+    <text class="lbl" x="60" y="24" text-anchor="end">d(x)</text>
+    <text class="mut" x="60" y="70" text-anchor="end">0.8</text>
+    <text class="mut" x="60" y="118" text-anchor="end">0.6</text>
+    <text class="mut" x="60" y="166" text-anchor="end">0.4</text>
+    <text class="mut" x="60" y="214" text-anchor="end">0.2</text>
+    <text class="mut" x="60" y="264" text-anchor="end">0.0</text>
+
+    <text class="lbl" x="950" y="290" text-anchor="end">x</text>
+    <text class="mut" x="80"  y="290">низьке</text>
+    <text class="mut" x="950" y="290" text-anchor="end">високе</text>
+
+    <!-- Curve (S-shaped, illustrative Harrington-like desirability) -->
+    <!-- Coordinates manually tuned to look like a desirability curve -->
+    <path class="curve"
+      d="M 95 250
+         C 150 248, 190 240, 220 225
+         C 260 205, 290 180, 320 150
+         C 360 110, 410 75, 470 55
+         C 540 32, 640 28, 740 35
+         C 830 42, 900 55, 940 70" />
+
+    <!-- Reference points -->
+    <circle class="pt" cx="220" cy="225" r="5"/>
+    <circle class="pt" cx="320" cy="150" r="5"/>
+    <circle class="pt" cx="470" cy="55"  r="5"/>
+    <circle class="pt" cx="740" cy="35"  r="5"/>
+
+    <!-- Legend bands -->
+    <rect class="band" x="80" y="275" width="870" height="55"/>
+    <text class="tag" x="95" y="300">Інтерпретація d(x):</text>
+    <text class="mut" x="95" y="320">
+      0.0–0.2 — неприйнятно · 0.2–0.4 — погано · 0.4–0.6 — задовільно · 0.6–0.8 — добре · 0.8–1.0 — відмінно
+    </text>
+  </svg>
+
+  <p class="muted" style="margin-top:10px;">
+    Примітка: у системі значення показників приводяться до d(x) на основі нормалізації;
+    далі отримані d(x) агрегуються для обчислення інтегральної оцінки <strong>D</strong>.
+  </p>
+</div>
+
+
+      <!-- SVG: 2 етапи Харрінгтон + агрегування -->
+      <svg viewBox="0 0 980 220" width="100%" height="220" role="img" aria-label="Нормалізація 0..1 → агрегування → D → шкала інтерпретації">
+        <defs>
+          <style>
+            .bx{fill:#ffffff;stroke:#2563eb;stroke-width:2;rx:14;ry:14}
+            .hd{font:700 15px Inter, sans-serif;fill:#111827}
+            .tx{font:400 13px Inter, sans-serif;fill:#6b7280}
+            .ar{stroke:#2563eb;stroke-width:2.2;marker-end:url(#m3)}
+            .scale{fill:#f8fafc;stroke:#e5e7eb;stroke-width:1.2;rx:14;ry:14}
+            .sc{font:600 12px Inter, sans-serif;fill:#374151}
+          </style>
+          <marker id="m3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6" fill="#2563eb" />
+          </marker>
+        </defs>
+
+        <rect class="bx" x="40" y="55" width="280" height="110"></rect>
+        <rect class="bx" x="360" y="55" width="250" height="110"></rect>
+        <rect class="bx" x="650" y="55" width="290" height="110"></rect>
+
+        <line class="ar" x1="320" y1="110" x2="360" y2="110"></line>
+        <line class="ar" x1="610" y1="110" x2="650" y2="110"></line>
+
+        <text class="hd" x="60" y="85">Етап 1. Приведення до 0..1</text>
+        <text class="tx" x="60" y="108">Шкала бажаності Харрінгтона</text>
+        <text class="tx" x="60" y="128">(0 — неприйнятно, 1 — найкраще)</text>
+
+        <text class="hd" x="380" y="85">Етап 2. Агрегування</text>
+        <text class="tx" x="380" y="108">узагальнення показників</text>
+        <text class="tx" x="380" y="128">в інтегральну оцінку</text>
+
+        <text class="hd" x="670" y="85">Результат: D (0..1)</text>
+        <text class="tx" x="670" y="108">узагальнений дидактичний</text>
+        <text class="tx" x="670" y="128">показник якості е-НП</text>
+
+        <rect class="scale" x="40" y="175" width="900" height="32"></rect>
+        <text class="sc" x="60"  y="196">0.0 — неприйнятно</text>
+        <text class="sc" x="385" y="196">0.5 — достатньо / потребує удосконалення</text>
+        <text class="sc" x="760" y="196">1.0 — відмінно</text>
+      </svg>
+
+      <p class="muted" style="margin-top:10px;">
+        Узагальнений показник будується через (1) нормалізацію елементарних дидактичних показників до безрозмірного вигляду
+        та (2) агрегування в інтегральну оцінку D з подальшою інтерпретацією за якісною шкалою.
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:16px; background:#f8fafc;">
+      <h3 style="margin-bottom:10px;">Критерії оцінки (кваліметричний підхід)</h3>
+      <ul class="bullets">
+        <li><strong>Критерій придатності</strong>: об’єкт (курс/модуль/заняття) задовольняє допустимим вимогам.</li>
+        <li><strong>Критерій оптимальності</strong>: показник наближається до оптимального значення за характеристикою.</li>
+        <li><strong>Критерій переваги</strong>: один варіант переважає інші за сукупністю оцінок.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+  <!-- ДОСЛІДЖЕННЯ / РОЗРАХУНОК -->
+
+  <section class="section" id="research">
+    <div class="card">
+      <div class="card-title">
+        <h2>Завантаження даних</h2>
+        <div class="muted">Формат: CSV з заголовками колонок</div>
+      </div>
+
+      <%= form_with url: calculate_path, multipart: true, local: true do |f| %>
+        <div class="upload-box">
+          <%= f.file_field :csv_file, required: true %>
+        </div>
+
+        <div style="margin-top: 14px;">
+          <button class="btn">Обчислити показники</button>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <% if @normalized.present? %>
+    <!-- НОРМАЛІЗОВАНІ -->
+    <section class="section">
+      <div class="card">
+        <div class="card-title">
+          <h2>Нормалізовані показники</h2>
+          <div class="muted">Табличне представлення нормалізованих значень</div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <% @normalized.first.keys.each do |k| %>
+                  <th><%= QualityController::INDICATOR_NAMES[k] || k %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% @normalized.each do |row| %>
+                <tr>
+                  <% row.values.each do |v| %>
+                    <td><%= v.round(3) %></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ІНТЕГРАЛЬНИЙ -->
+    <section class="section">
+      <div class="card">
+        <div class="card-title">
+          <h2>Інтегральний показник якості</h2>
+          <div class="muted">Результат агрегування показників</div>
+        </div>
+
+        <div class="kpi">
+          <div class="value"><%= @integral %></div>
+          <div class="label">D — інтегральна оцінка якості</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ГРАФІКИ -->
+    <section class="section">
+      <div class="card">
+        <div class="card-title">
+          <h2>Візуалізація результатів</h2>
+          <div class="muted">Графічне подання середніх значень і динаміки</div>
+        </div>
+
+        <div class="chart-grid">
+          <div class="chart-box">
+            <h3 style="margin-bottom:10px;">Середні значення показників</h3>
+            <%= column_chart @chart_data, height: "320px" %>
+          </div>
+
+          <div class="chart-box">
+            <h3 style="margin-bottom:10px;">Динаміка показників</h3>
+            <%= line_chart @chart_data, height: "320px", curve: true %>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% end %>
+
+</div>

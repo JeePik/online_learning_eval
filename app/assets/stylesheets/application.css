@@ -1,0 +1,229 @@
+:root{
+  --ee-blue-900:#0b2a6f;
+  --ee-blue-700:#1d4ed8;
+  --ee-white:#fff;
+  --ee-topbar-h: 64px;
+}
+
+/* плавний скрол по якорях (візуально на тіло не впливає) */
+html { scroll-behavior: smooth; }
+
+/* щоб секції не “заїжджали” під fixed меню */
+#about, #method, #research {
+  scroll-margin-top: calc(var(--ee-topbar-h) + 18px);
+}
+
+/* ===== TOPBAR: тільки смужка меню ===== */
+.ee-topbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--ee-topbar-h);
+  z-index: 1000;
+
+  /* На старті — зливається з hero (той самий градієнт) */
+  background: linear-gradient(135deg, var(--ee-blue-900), var(--ee-blue-700));
+  border-bottom: 1px solid rgba(255,255,255,0.00);
+  box-shadow: none;
+
+  transition: border-color 220ms ease, box-shadow 220ms ease, backdrop-filter 220ms ease;
+}
+
+.ee-topbar.is-solid{
+  border-bottom-color: rgba(255,255,255,0.12);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ee-topbar-inner{
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ee-topbar-nav{
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  white-space: nowrap;
+  font-family: "Inter", sans-serif;
+}
+
+.ee-topbar-nav a{
+  color: rgba(255,255,255,.95);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .2px;
+  padding: 10px 2px;
+  position: relative;
+}
+
+.ee-topbar-nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom: 6px;
+  width:0%;
+  height:2px;
+  background: rgba(255,255,255,.9);
+  transition: width .22s ease;
+}
+
+.ee-topbar-nav a:hover::after{ width:100%; }
+
+/* ===== HERO (НЕ липкий) ===== */
+.ee-hero-header{
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  width: 100%;
+  background:
+    radial-gradient(1100px 520px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+    linear-gradient(135deg, var(--ee-blue-900), var(--ee-blue-700));
+  color: var(--ee-white);
+  overflow: hidden;
+}
+
+/* Контент шапки: додаємо padding-top, щоб лого/слоган не залазили під меню */
+.ee-hero-center{
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: calc(var(--ee-topbar-h) + 18px) 22px 28px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  text-align: center;
+}
+
+.ee-hero-logo{
+  width: min(92vw, 980px);
+  height: auto;
+  max-height: 46vh;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 16px 40px rgba(0,0,0,.20));
+}
+
+.ee-hero-tagline{
+  max-width: 980px;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(16px, 2.0vw, 22px);
+  line-height: 1.35;
+  opacity: .95;
+}
+
+.ee-hero-scroll{
+  position:absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: .85;
+  font-size: 12px;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 10px;
+  font-family: "Inter", sans-serif;
+}
+
+.ee-hero-scroll i{
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255,255,255,.85);
+  border-bottom: 2px solid rgba(255,255,255,.85);
+  transform: rotate(45deg);
+  animation: ee-bounce 1.4s infinite ease-in-out;
+}
+
+@keyframes ee-bounce{
+  0%,100%{ transform: rotate(45deg) translate(0,0); opacity:.75; }
+  50%{ transform: rotate(45deg) translate(0,6px); opacity:1; }
+}
+
+/* ===== Back to top ===== */
+.ee-back-to-top{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.20);
+  background: rgba(11, 42, 111, 0.92);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+  z-index: 1100;
+}
+
+.ee-back-to-top.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.ee-back-to-top:hover{
+  transform: translateY(-2px);
+}
+
+/* адаптив */
+@media (max-width: 720px){
+  .ee-topbar-inner{ justify-content: center; }
+  .ee-topbar-nav{ gap: 18px; }
+  .ee-topbar-nav a{ font-size: 13px; padding: 8px 2px; }
+  .ee-hero-logo{ max-height: 40vh; }
+}
+
+/* === FIX 1: прибрати білі поля по краях === */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden; /* щоб жоден елемент не робив горизонтальний скрол */
+}
+
+/* Герой і топбар завжди на всю ширину */
+.ee-hero-header,
+.ee-topbar {
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+/* === FIX 2: смуга меню зливається з hero на старті === */
+.ee-topbar {
+  background: transparent;     /* на першому екрані зливається з hero */
+  border-bottom: 1px solid rgba(255,255,255,0.00);
+  box-shadow: none;
+}
+
+/* коли прокрутили — робимо так само “в стилі”, як hero */
+.ee-topbar.is-solid {
+  background: linear-gradient(135deg, var(--ee-blue-900), var(--ee-blue-700));
+  border-bottom-color: rgba(255,255,255,0.12);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
