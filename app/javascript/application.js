@@ -53,3 +53,62 @@ window.addEventListener("resize", setStickyOffsetVar);
     })
   })
 })()
+
+//Підсвітка активних якорів меню
+;(function () {
+  function getStickyOffset() {
+    const cssVar = getComputedStyle(document.documentElement)
+      .getPropertyValue("--sticky-offset")
+      .trim()
+    const n = parseFloat(cssVar)
+    return Number.isFinite(n) ? n : 96
+  }
+
+  function setActiveLink(hash) {
+    const links = document.querySelectorAll('a[href^="#"]')
+    links.forEach((a) => {
+      const isActive = a.getAttribute("href") === hash
+      a.classList.toggle("is-active", isActive)
+      a.setAttribute("aria-current", isActive ? "page" : "false")
+    })
+  }
+
+  function initActiveAnchors() {
+    // секції, які реально є на лендінгу
+    const sections = Array.from(
+      document.querySelectorAll("section[id]")
+    ).filter((s) => s.id)
+
+    if (sections.length === 0) return
+
+    // якщо меню містить не всі секції — це ок, просто активуватимемо те, що є
+    const offset = getStickyOffset()
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // беремо ті, що видимі
+        const visible = entries.filter((e) => e.isIntersecting)
+        if (visible.length === 0) return
+
+        // вибираємо “найближчу” до верху (з урахуванням sticky)
+        visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        const top = visible[0].target
+        setActiveLink(`#${top.id}`)
+      },
+      {
+        root: null,
+        // важливо: віднімаємо sticky offset, щоб секція ставала активною коректно
+        rootMargin: `-${offset}px 0px -60% 0px`,
+        threshold: [0.1, 0.2, 0.3],
+      }
+    )
+
+    sections.forEach((s) => observer.observe(s))
+
+    // ініціалізація по поточному hash (якщо є)
+    if (location.hash) setActiveLink(location.hash)
+  }
+
+  document.addEventListener("turbo:load", initActiveAnchors)
+  document.addEventListener("turbo:render", initActiveAnchors)
+})()
