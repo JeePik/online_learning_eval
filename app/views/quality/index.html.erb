@@ -388,7 +388,7 @@
               html: { multipart: true, id: "calculate-form" } do |f| %>
 
           <div class="upload-box">
-            <%= f.file_field :csv_file, required: true %>
+            <%= f.file_field :csv_file, required: true, accept: ".csv,text/csv" %>
           </div>
 
           <div style="margin-top: 14px;">
@@ -407,7 +407,8 @@
       <div class="muted">Табличне представлення нормалізованих значень</div>
     </div>
 
-    <turbo-frame id="results">
+    <turbo-frame id="results" data-turbo-cache="false">
+
       <%# Початковий стан %>
       <div class="muted">Завантажте CSV-файл і натисніть «Обчислити показники».</div>
     </turbo-frame>

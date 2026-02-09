@@ -57,7 +57,7 @@ private
 
 def normalize(x)
 min = 0.0
-max = 100.0
+max = 100.1
 
 
 v = (x - min) / (max - min)

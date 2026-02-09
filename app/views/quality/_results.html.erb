@@ -43,12 +43,12 @@
   <div class="chart-grid">
     <div class="chart-box">
       <h3 style="margin-bottom:10px;">Середні значення показників</h3>
-      <%= column_chart @chart_data, height: "320px" %>
+      <%= column_chart @chart_data, id: "avg_indicators_#{@chart_uid}", height: "320px" %>
     </div>
 
     <div class="chart-box">
       <h3 style="margin-bottom:10px;">Динаміка показників</h3>
-      <%= line_chart @chart_data, height: "320px" %>
+      <%= line_chart @chart_data, id: "trend_indicators_#{@chart_uid}", height: "320px" %>
     </div>
   </div>
 </div>

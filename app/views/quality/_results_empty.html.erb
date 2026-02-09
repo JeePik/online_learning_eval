@@ -1,0 +1,9 @@
+<% if flash.now[:alert].present? %>
+  <div class="alert alert-error" role="alert">
+    <%= flash.now[:alert] %>
+  </div>
+<% end %>
+
+<div class="muted">
+  Завантажте CSV-файл і натисніть «Обчислити показники».
+</div>

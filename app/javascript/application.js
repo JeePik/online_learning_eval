@@ -1,9 +1,10 @@
 // app/javascript/application.js
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-
 import "@hotwired/turbo-rails"
 
-// Після Turbo-переходів/рендерів просимо Chartkick перемалювати графіки
+/* =========================
+   Chartkick: redraw after Turbo updates
+========================= */
+
 function redrawChartkick() {
   if (window.Chartkick && window.Chartkick.eachChart) {
     window.Chartkick.eachChart((chart) => chart.redraw())
@@ -12,49 +13,47 @@ function redrawChartkick() {
 
 document.addEventListener("turbo:load", redrawChartkick)
 document.addEventListener("turbo:render", redrawChartkick)
+// (turbo:frame-load можна додати, але зазвичай не потрібно)
 
+/* =========================
+   Sticky offset var + scroll to "normalized"
+========================= */
 
 ;(function () {
   function setStickyOffsetVar() {
-  const sticky = document.querySelector(".sticky-menu, .sticky-nav, .navbar, .header-menu");
-  const offset = (sticky ? sticky.offsetHeight : 0) + 12;
-  document.documentElement.style.setProperty("--sticky-offset", `${offset}px`);
-}
-
-function scrollToNormalized() {
-  const el = document.getElementById("normalized");
-  if (!el) return;
-
-  // 1) виставляємо актуальний відступ
-  setStickyOffsetVar();
-
-  // 2) скролимо з урахуванням scroll-margin-top
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-document.addEventListener("turbo:load", setStickyOffsetVar);
-window.addEventListener("resize", setStickyOffsetVar);
-
-
-
-  // ✅ Головний тригер: після завершення Turbo submit
-  document.addEventListener("turbo:submit-end", (event) => {
-  const form = event.target;
-  if (!(form instanceof HTMLFormElement)) return;
-  if (form.id !== "calculate-form") return;
-
-  if (event.detail && event.detail.success) {
-    requestAnimationFrame(() => requestAnimationFrame(scrollToNormalized));
+    const sticky = document.querySelector(
+      ".sticky-menu, .sticky-nav, .navbar, .header-menu"
+    )
+    const offset = (sticky ? sticky.offsetHeight : 0) + 12
+    document.documentElement.style.setProperty("--sticky-offset", `${offset}px`)
   }
 
-    // даємо Turbo Stream оновити DOM і тоді скролимо
-    requestAnimationFrame(() => {
-      requestAnimationFrame(scrollToNormalized)
-    })
+  function scrollToNormalized() {
+    const el = document.getElementById("normalized")
+    if (!el) return
+
+    setStickyOffsetVar()
+    el.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  document.addEventListener("turbo:load", setStickyOffsetVar)
+  window.addEventListener("resize", setStickyOffsetVar)
+
+  document.addEventListener("turbo:submit-end", (event) => {
+    const form = event.target
+    if (!(form instanceof HTMLFormElement)) return
+    if (form.id !== "calculate-form") return
+    if (!event.detail?.success) return
+
+    // Даємо Turbo Stream оновити DOM, потім скролимо
+    requestAnimationFrame(() => requestAnimationFrame(scrollToNormalized))
   })
 })()
 
-//Підсвітка активних якорів меню
+/* =========================
+   Active anchors highlighting
+========================= */
+
 ;(function () {
   function getStickyOffset() {
     const cssVar = getComputedStyle(document.documentElement)
@@ -65,47 +64,39 @@ window.addEventListener("resize", setStickyOffsetVar);
   }
 
   function setActiveLink(hash) {
-    const links = document.querySelectorAll('a[href^="#"]')
-    links.forEach((a) => {
-      const isActive = a.getAttribute("href") === hash
-      a.classList.toggle("is-active", isActive)
-      a.setAttribute("aria-current", isActive ? "page" : "false")
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+      const active = a.getAttribute("href") === hash
+      a.classList.toggle("is-active", active)
+      a.setAttribute("aria-current", active ? "page" : "false")
     })
   }
 
   function initActiveAnchors() {
-    // секції, які реально є на лендінгу
-    const sections = Array.from(
-      document.querySelectorAll("section[id]")
-    ).filter((s) => s.id)
+    const sections = Array.from(document.querySelectorAll("section[id]")).filter(
+      (s) => s.id
+    )
+    if (!sections.length) return
 
-    if (sections.length === 0) return
-
-    // якщо меню містить не всі секції — це ок, просто активуватимемо те, що є
     const offset = getStickyOffset()
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // беремо ті, що видимі
         const visible = entries.filter((e) => e.isIntersecting)
-        if (visible.length === 0) return
+        if (!visible.length) return
 
-        // вибираємо “найближчу” до верху (з урахуванням sticky)
-        visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-        const top = visible[0].target
-        setActiveLink(`#${top.id}`)
+        visible.sort(
+          (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+        )
+        setActiveLink(`#${visible[0].target.id}`)
       },
       {
-        root: null,
-        // важливо: віднімаємо sticky offset, щоб секція ставала активною коректно
         rootMargin: `-${offset}px 0px -60% 0px`,
-        threshold: [0.1, 0.2, 0.3],
+        threshold: 0.2,
       }
     )
 
     sections.forEach((s) => observer.observe(s))
 
-    // ініціалізація по поточному hash (якщо є)
     if (location.hash) setActiveLink(location.hash)
   }
 

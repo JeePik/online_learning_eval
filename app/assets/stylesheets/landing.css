@@ -208,4 +208,17 @@ svg .text {
 /* підстраховка: якщо десь секції мають class="section" */
 .section { scroll-margin-top: calc(64px + 18px); }
 
+/* стилі для помилки розширення файлу*/
+.alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.alert-error {
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+}
+
 
