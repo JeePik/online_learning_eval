@@ -23,41 +23,41 @@ INDICATOR_NAMES = {
 
 
 def calculate
-file = params[:csv_file]
+  file = params[:csv_file]
 
-
-if file.nil?
-redirect_to root_path, alert: "Завантажте CSV-файл"
-return
-end
-
-
-data = []
-
-CSV.open(file.path, headers: true) do |csv|
-  csv.each do |row|
-    data << row.to_h.transform_values(&:to_f)
+  if file.nil?
+    respond_to do |format|
+      format.html { redirect_to root_path, alert: "Завантажте CSV-файл" }
+      format.turbo_stream do
+        flash.now[:alert] = "Завантажте CSV-файл"
+        render turbo_stream: turbo_stream.replace("results", partial: "quality/results_empty")
+      end
+    end
+    return
   end
-end
 
+  data = []
+  CSV.open(file.path, headers: true) do |csv|
+    csv.each do |row|
+      data << row.to_h.transform_values(&:to_f)
+    end
+  end
 
-calculator = DidacticQualityCalculator.new(data)
+  calculator = DidacticQualityCalculator.new(data)
 
+  @normalized = calculator.normalized_indicators
+  @integral   = calculator.integral_index
 
-@normalized = calculator.normalized_indicators
-@integral = calculator.integral_index
+  raw = calculator.chart_data
+  @chart_data = raw.transform_keys { |k| INDICATOR_NAMES[k] || k }
 
-raw = calculator.chart_data
+  session[:normalized] = @normalized
+  session[:integral]   = @integral
 
-@chart_data = raw.transform_keys do |k|
-  INDICATOR_NAMES[k] || k
-end
-
-session[:normalized] = @normalized
-session[:integral] = @integral
-
-
-render :index
+  respond_to do |format|
+    format.html { render :index }          # якщо хтось відправить без Turbo
+    format.turbo_stream                   # буде шукати calculate.turbo_stream.erb
+  end
 end
 
 

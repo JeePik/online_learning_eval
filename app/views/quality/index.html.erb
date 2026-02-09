@@ -383,86 +383,36 @@
         <div class="muted">Формат: CSV з заголовками колонок</div>
       </div>
 
-      <%= form_with url: calculate_path, multipart: true, local: true do |f| %>
-        <div class="upload-box">
-          <%= f.file_field :csv_file, required: true %>
-        </div>
+      <%= form_with url: calculate_path,
+              method: :post,
+              html: { multipart: true, id: "calculate-form" } do |f| %>
 
-        <div style="margin-top: 14px;">
-          <button class="btn">Обчислити показники</button>
-        </div>
+          <div class="upload-box">
+            <%= f.file_field :csv_file, required: true %>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <%= f.submit "Обчислити показники", class: "btn" %>
+          </div>
+
       <% end %>
+
     </div>
   </section>
 
-  <% if @normalized.present? %>
-    <!-- НОРМАЛІЗОВАНІ -->
-    <section class="section">
-      <div class="card">
-        <div class="card-title">
-          <h2>Нормалізовані показники</h2>
-          <div class="muted">Табличне представлення нормалізованих значень</div>
-        </div>
+  <section id="normalized" class="section">
+  <div class="card">
+    <div class="card-title">
+      <h2>Нормалізовані показники</h2>
+      <div class="muted">Табличне представлення нормалізованих значень</div>
+    </div>
 
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <% @normalized.first.keys.each do |k| %>
-                  <th><%= QualityController::INDICATOR_NAMES[k] || k %></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% @normalized.each do |row| %>
-                <tr>
-                  <% row.values.each do |v| %>
-                    <td><%= v.round(3) %></td>
-                  <% end %>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <turbo-frame id="results">
+      <%# Початковий стан %>
+      <div class="muted">Завантажте CSV-файл і натисніть «Обчислити показники».</div>
+    </turbo-frame>
+  </div>
+</section>
 
-    <!-- ІНТЕГРАЛЬНИЙ -->
-    <section class="section">
-      <div class="card">
-        <div class="card-title">
-          <h2>Інтегральний показник якості</h2>
-          <div class="muted">Результат агрегування показників</div>
-        </div>
-
-        <div class="kpi">
-          <div class="value"><%= @integral %></div>
-          <div class="label">D — інтегральна оцінка якості</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ГРАФІКИ -->
-    <section class="section">
-      <div class="card">
-        <div class="card-title">
-          <h2>Візуалізація результатів</h2>
-          <div class="muted">Графічне подання середніх значень і динаміки</div>
-        </div>
-
-        <div class="chart-grid">
-          <div class="chart-box">
-            <h3 style="margin-bottom:10px;">Середні значення показників</h3>
-            <%= column_chart @chart_data, height: "320px" %>
-          </div>
-
-          <div class="chart-box">
-            <h3 style="margin-bottom:10px;">Динаміка показників</h3>
-            <%= line_chart @chart_data, height: "320px", curve: true %>
-          </div>
-        </div>
-      </div>
-    </section>
-  <% end %>
 
 </div>

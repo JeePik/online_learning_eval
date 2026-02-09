@@ -208,3 +208,4 @@ svg .text {
 /* підстраховка: якщо десь секції мають class="section" */
 .section { scroll-margin-top: calc(64px + 18px); }
 
+
