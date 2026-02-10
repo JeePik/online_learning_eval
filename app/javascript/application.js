@@ -20,6 +20,8 @@ document.addEventListener("turbo:render", redrawChartkick)
 ========================= */
 
 ;(function () {
+  let pendingScroll = false
+
   function setStickyOffsetVar() {
     const sticky = document.querySelector(
       ".sticky-menu, .sticky-nav, .navbar, .header-menu"
@@ -31,7 +33,6 @@ document.addEventListener("turbo:render", redrawChartkick)
   function scrollToNormalized() {
     const el = document.getElementById("normalized")
     if (!el) return
-
     setStickyOffsetVar()
     el.scrollIntoView({ behavior: "smooth", block: "start" })
   }
@@ -39,14 +40,34 @@ document.addEventListener("turbo:render", redrawChartkick)
   document.addEventListener("turbo:load", setStickyOffsetVar)
   window.addEventListener("resize", setStickyOffsetVar)
 
+  // 1) Після успішного submit ставимо "прапорець", але НЕ скролимо тут
   document.addEventListener("turbo:submit-end", (event) => {
     const form = event.target
     if (!(form instanceof HTMLFormElement)) return
     if (form.id !== "calculate-form") return
     if (!event.detail?.success) return
 
-    // Даємо Turbo Stream оновити DOM, потім скролимо
-    requestAnimationFrame(() => requestAnimationFrame(scrollToNormalized))
+    pendingScroll = true
+  })
+
+  // 2) Ловимо момент, коли Turbo Stream реально оновлює DOM
+  document.addEventListener("turbo:before-stream-render", (event) => {
+    if (!pendingScroll) return
+
+    const stream = event.target
+    if (!(stream instanceof Element)) return
+
+    const target = stream.getAttribute("target")
+    if (target !== "results") return
+
+    const originalRender = event.detail.render
+    event.detail.render = (streamEl) => {
+      originalRender(streamEl)
+
+      // DOM уже оновлено — тепер можна скролити
+      requestAnimationFrame(() => requestAnimationFrame(scrollToNormalized))
+      pendingScroll = false
+    }
   })
 })()
 
