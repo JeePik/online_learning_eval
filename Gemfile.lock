@@ -383,6 +383,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  matrix
   prawn
   prawn-table
   propshaft
