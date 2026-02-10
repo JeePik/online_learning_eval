@@ -1,7 +1,4 @@
 require "csv"
-require "prawn"
-require "prawn/table"
-
 
 
 class QualityController < ApplicationController
@@ -114,7 +111,7 @@ session.delete(:normalized)
 session.delete(:integral)
 session.delete(:chart_data)
 
-  
+
   type = params[:type]
   cache_key = session[:dq_cache_key]
 
