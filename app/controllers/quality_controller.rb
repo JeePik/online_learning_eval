@@ -26,6 +26,12 @@ INDICATOR_NAMES = {
 
 
 def calculate
+
+session.delete(:normalized)
+session.delete(:integral)
+session.delete(:chart_data)
+
+
   response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
   response.headers["Pragma"] = "no-cache"
   response.headers["Expires"] = "0"
@@ -103,6 +109,12 @@ end
 
 
 def download
+
+session.delete(:normalized)
+session.delete(:integral)
+session.delete(:chart_data)
+
+  
   type = params[:type]
   cache_key = session[:dq_cache_key]
 
