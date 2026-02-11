@@ -8,6 +8,13 @@ Bundler.require(*Rails.groups)
 
 module OnlineLearningEval
   class Application < Rails::Application
+    config.i18n.default_locale = :uk
+    config.i18n.available_locales = [:uk]
+  end
+end
+
+module OnlineLearningEval
+  class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 

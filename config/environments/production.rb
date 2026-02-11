@@ -89,4 +89,11 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  begin
+  # якщо раптом хтось знову спробує solid_cache
+  # не даємо крашитись — fallback на memory_store
+      config.cache_store = :memory_store
+    rescue
+      config.cache_store = :memory_store
+  end
 end

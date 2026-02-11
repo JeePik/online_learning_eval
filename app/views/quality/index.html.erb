@@ -383,19 +383,31 @@
         <div class="muted">Формат: CSV з заголовками колонок</div>
       </div>
 
-      <%= form_with url: calculate_path,
+    <%= form_with url: calculate_path,
               method: :post,
               html: { multipart: true, id: "calculate-form" } do |f| %>
 
-          <div class="upload-box">
-            <%= f.file_field :csv_file, required: true, accept: ".csv,text/csv" %>
-          </div>
+        <div class="upload-box">
+          <%= f.file_field :csv_file,
+             id: "csv_file",
+             class: "upload-input",
+             accept: ".csv,text/csv" %>
 
-          <div style="margin-top: 14px;">
-            <%= f.submit "Обчислити показники", class: "btn" %>
-          </div>
+          <label for="csv_file" class="upload-btn">
+            Обрати CSV-файл
+          </label>
 
-      <% end %>
+          <div id="file-name" class="upload-filename">
+           Файл не обрано
+          </div>
+        </div>
+
+
+        <div style="margin-top: 14px;">
+          <%= f.submit "Обчислити показники", class: "btn" %>
+        </div>
+
+    <% end %>
 
     </div>
   </section>

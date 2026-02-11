@@ -124,3 +124,51 @@ document.addEventListener("turbo:render", redrawChartkick)
   document.addEventListener("turbo:load", initActiveAnchors)
   document.addEventListener("turbo:render", initActiveAnchors)
 })()
+
+/* =========================
+   Custom file input
+========================= */
+
+document.addEventListener("turbo:load", () => {
+  const input = document.getElementById("csv_file")
+  const fileName = document.getElementById("file-name")
+  const form = document.getElementById("calculate-form")
+
+  if (!input || !fileName || !form) return
+
+  const initialText = fileName.textContent
+
+  // Показ назви файлу
+  input.addEventListener("change", () => {
+    fileName.textContent = input.files?.[0]?.name || initialText
+  })
+
+  // Кастомна валідація
+  form.addEventListener("submit", (e) => {
+    if (!input.files || input.files.length === 0) {
+      e.preventDefault()
+      showToast("Оберіть файл CSV перед обчисленням")
+    }
+  })
+})
+
+/* =========================
+   Toast повідомлення
+========================= */
+
+function showToast(message) {
+  const toast = document.createElement("div")
+  toast.className = "toast-message"
+  toast.textContent = message
+  document.body.appendChild(toast)
+
+  setTimeout(() => {
+    toast.classList.add("show")
+  }, 10)
+
+  setTimeout(() => {
+    toast.classList.remove("show")
+    setTimeout(() => toast.remove(), 300)
+  }, 3000)
+}
+
