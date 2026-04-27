@@ -1,0 +1,105 @@
+<div id="subject-pairs-anchor"></div>
+<div class="card" id="subject-pairs-normalized">
+  <div class="card-title">
+    <h2>Нормалізовані показники (5 пар)</h2>
+    <span class="muted">Таблиця представлення нормалізованих значень</span>
+  </div>
+
+  <div class="metadata-grid" style="margin-top: 12px;">
+    <div><strong>Факультет:</strong> <%= metadata["faculty"] %></div>
+    <div><strong>Спеціальність:</strong> <%= metadata["specialty"] %></div>
+    <div><strong>Семестр:</strong> <%= metadata["semester"] %></div>
+    <div><strong>Група:</strong> <%= metadata["group_name"] %></div>
+    <div><strong>Назва дисципліни:</strong> <%= metadata["discipline"] %></div>
+    <div><strong>Шифр:</strong> <%= metadata["code"] %></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Пара</th>
+          <th>Змістовність</th>
+          <th>Час</th>
+          <th>Витрати</th>
+          <th>Успішність</th>
+          <th>Науковість</th>
+          <th>Складність</th>
+          <th>Практична</th>
+          <th>Засвоєння</th>
+          <th>Активність</th>
+          <th>Інтерес</th>
+          <th>Інтегральний</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% normalized_rows.each do |row| %>
+          <tr>
+            <td><%= row["pair_number"] %></td>
+            <td><%= row["content"].round(3) %></td>
+            <td><%= row["time"].round(3) %></td>
+            <td><%= row["cost"].round(3) %></td>
+            <td><%= row["grade"].round(3) %></td>
+            <td><%= row["science"].round(3) %></td>
+            <td><%= row["complexity"].round(3) %></td>
+            <td><%= row["practice"].round(3) %></td>
+            <td><%= row["assimilation"].round(3) %></td>
+            <td><%= row["activity"].round(3) %></td>
+            <td><%= row["interest"].round(3) %></td>
+            <td><strong><%= row["integral"].round(4) %></strong></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">
+    <h2>Узагальнений показник якості</h2>
+    <span class="muted">Результат агрегування показників</span>
+  </div>
+
+  <div class="kpi">
+    <div class="value"><%= overall_integral %></div>
+    <div class="label">D — інтегральна оцінка якості</div>
+  </div>
+
+  <div style="margin-top: 16px;">
+  <%= link_to "Експорт CSV (звіт)",
+      export_subject_pairs_path(type: "results", format: :csv),
+      class: "btn",
+      data: { turbo: false } %>
+
+  <%= link_to "Експорт PDF (звіт)",
+      export_subject_pairs_path(type: "results", format: :pdf),
+      class: "btn",
+      data: { turbo: false } %>
+
+  <%= link_to "Експорт TXT",
+      export_subject_pairs_path(type: "results_txt"),
+      class: "btn",
+      data: { turbo: false } %>
+
+  <%= link_to "Експорт DAT",
+      export_subject_pairs_path(type: "results_dat"),
+      class: "btn",
+      data: { turbo: false } %>
+</div>
+</div>
+
+<div class="card">
+  <div class="card-title">
+    <h2>Візуалізація результатів</h2>
+    <span class="muted">Графік інтегрального показника</span>
+  </div>
+
+  <div class="chart-box">
+    <%= column_chart(
+      normalized_rows.to_h { |row| ["Пара #{row['pair_number']}", row["integral"]] },
+      height: "320px",
+      min: 0,
+      max: 1
+    ) %>
+  </div>
+</div>

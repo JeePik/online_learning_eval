@@ -32,8 +32,13 @@
     <div class="label">D — інтегральна оцінка якості</div>
   </div>
   <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
-  <%= link_to "Експорт CSV (звіт)", download_path("results", format: :csv), class: "btn" %>
-  <%= link_to "Експорт PDF (звіт)", download_path("results", format: :pdf), class: "btn" %>
+<%= link_to "Експорт CSV (звіт)", download_path(type: "results", format: :csv), class: "btn", data: { turbo: false } %>
+
+<%= link_to "Експорт PDF (звіт)", download_path(type: "results", format: :pdf), class: "btn", data: { turbo: false } %>
+
+<%= link_to "Експорт TXT", download_path(type: "results_txt"), class: "btn", data: { turbo: false } %>
+
+<%= link_to "Експорт DAT", download_path(type: "results_dat"), class: "btn", data: { turbo: false } %>
   </div>
 
 </div>

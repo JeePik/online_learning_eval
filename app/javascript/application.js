@@ -13,14 +13,37 @@ function redrawChartkick() {
 
 document.addEventListener("turbo:load", redrawChartkick)
 document.addEventListener("turbo:render", redrawChartkick)
-// (turbo:frame-load можна додати, але зазвичай не потрібно)
 
 /* =========================
-   Sticky offset var + scroll to "normalized"
+   Clear only target container before submit
+========================= */
+
+document.addEventListener("turbo:submit-start", (event) => {
+  const form = event.target
+  if (!(form instanceof HTMLFormElement)) return
+
+  let targetId = null
+
+  if (form.id === "calculate-form") {
+    targetId = "results"
+  } else if (form.id === "subject-pairs-form") {
+    targetId = "subject_pairs_results"
+  }
+
+  if (!targetId) return
+
+  const target = document.getElementById(targetId)
+  if (target) {
+    target.innerHTML = ""
+  }
+})
+
+/* =========================
+   Sticky offset var + scroll to updated results
 ========================= */
 
 ;(function () {
-  let pendingScroll = false
+  let pendingScrollTarget = null
 
   function setStickyOffsetVar() {
     const sticky = document.querySelector(
@@ -30,9 +53,19 @@ document.addEventListener("turbo:render", redrawChartkick)
     document.documentElement.style.setProperty("--sticky-offset", `${offset}px`)
   }
 
-  function scrollToNormalized() {
-    const el = document.getElementById("normalized")
+  function scrollToTarget(targetId) {
+    if (!targetId) return
+
+    let el = null
+
+    if (targetId === "results") {
+      el = document.getElementById("normalized") || document.getElementById("results")
+    } else if (targetId === "subject_pairs_results") {
+      el = document.getElementById("subject-pairs-anchor") || document.getElementById("subject-pairs-normalized")
+    }
+
     if (!el) return
+
     setStickyOffsetVar()
     el.scrollIntoView({ behavior: "smooth", block: "start" })
   }
@@ -40,33 +73,38 @@ document.addEventListener("turbo:render", redrawChartkick)
   document.addEventListener("turbo:load", setStickyOffsetVar)
   window.addEventListener("resize", setStickyOffsetVar)
 
-  // 1) Після успішного submit ставимо "прапорець", але НЕ скролимо тут
+  // Після успішного submit запам'ятовуємо, куди треба скролити
   document.addEventListener("turbo:submit-end", (event) => {
     const form = event.target
     if (!(form instanceof HTMLFormElement)) return
-    if (form.id !== "calculate-form") return
     if (!event.detail?.success) return
 
-    pendingScroll = true
+    if (form.id === "calculate-form") {
+      pendingScrollTarget = "results"
+    } else if (form.id === "subject-pairs-form") {
+      pendingScrollTarget = "subject_pairs_results"
+    }
   })
 
-  // 2) Ловимо момент, коли Turbo Stream реально оновлює DOM
+  // Ловимо оновлення саме потрібного Turbo Stream target
   document.addEventListener("turbo:before-stream-render", (event) => {
-    if (!pendingScroll) return
+    if (!pendingScrollTarget) return
 
     const stream = event.target
     if (!(stream instanceof Element)) return
 
     const target = stream.getAttribute("target")
-    if (target !== "results") return
+    if (target !== pendingScrollTarget) return
 
     const originalRender = event.detail.render
     event.detail.render = (streamEl) => {
       originalRender(streamEl)
 
-      // DOM уже оновлено — тепер можна скролити
-      requestAnimationFrame(() => requestAnimationFrame(scrollToNormalized))
-      pendingScroll = false
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToTarget(target))
+      })
+
+      pendingScrollTarget = null
     }
   })
 })()
@@ -153,6 +191,24 @@ document.addEventListener("turbo:load", () => {
 })
 
 /* =========================
+   Subject pairs form validation
+========================= */
+
+document.addEventListener("turbo:load", () => {
+  const form = document.getElementById("subject-pairs-form")
+  if (!form) return
+
+  const input = form.querySelector('input[type="file"]')
+
+  form.addEventListener("submit", (e) => {
+    if (!input || !input.files || input.files.length === 0) {
+      e.preventDefault()
+      showToast("Оберіть CSV-файл для 5 пар")
+    }
+  })
+})
+
+/* =========================
    Toast повідомлення
 ========================= */
 
@@ -172,3 +228,19 @@ function showToast(message) {
   }, 3000)
 }
 
+/* =========================
+   Subject pairs custom file input
+========================= */
+
+document.addEventListener("turbo:load", () => {
+  const input = document.getElementById("subject_pairs_file")
+  const fileName = document.getElementById("subject-pairs-file-name")
+
+  if (!input || !fileName) return
+
+  const initialText = fileName.textContent
+
+  input.addEventListener("change", () => {
+    fileName.textContent = input.files?.[0]?.name || initialText
+  })
+})

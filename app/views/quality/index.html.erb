@@ -427,5 +427,72 @@
   </div>
 </section>
 
+<!-- РОЗРАХУНОК по предмету -->
+
+<section id="subject-pairs-section" class="subject-pairs-section">
+  <div class="section-container">
+    <h2 class="section-title">Розрахунок інтегрального показника якості для 5 пар дисципліни</h2>
+    <p class="section-subtitle">
+      Заповніть інформацію про дисципліну та завантажте CSV-файл із 5 рядками даних — по одному для кожної пари.
+    </p>
+
+    <%= form_with url: calculate_subject_pairs_path,
+                  method: :post,
+                  multipart: true,
+                  id: "subject-pairs-form",
+              data: { turbo: true } do |f| %>
+
+      <div class="subject-pairs-grid">
+        <div class="form-group">
+          <%= f.label :faculty, "Факультет" %>
+          <%= f.text_field :faculty, class: "form-control", placeholder: "Введіть факультет" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :specialty, "Спеціальність" %>
+          <%= f.text_field :specialty, class: "form-control", placeholder: "Введіть спеціальність" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :semester, "Семестр" %>
+          <%= f.text_field :semester, class: "form-control", placeholder: "Введіть семестр" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :group_name, "Група" %>
+          <%= f.text_field :group_name, class: "form-control", placeholder: "Введіть групу" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :discipline, "Назва дисципліни" %>
+          <%= f.text_field :discipline, class: "form-control", placeholder: "Введіть назву дисципліни" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :code, "Шифр" %>
+          <%= f.text_field :code, class: "form-control", placeholder: "Введіть шифр" %>
+        </div>
+      </div>
+
+      <div class="form-group file-upload-block">
+        <%= f.label :file, "CSV-файл для 5 пар" %>
+
+        <div class="custom-file-upload">
+          <label for="subject_pairs_file" class="btn">Обрати CSV-файл</label>
+          <%= f.file_field :file, accept: ".csv", id: "subject_pairs_file", class: "hidden-file-input" %>
+          <span id="subject-pairs-file-name" class="file-name-text">Файл не вибрано</span>
+        </div>
+      </div>
+
+      <div class="calculate-btn-wrap">
+        <%= f.submit "Обчислити показник для 5 пар", class: "btn" %>
+      </div>
+    <% end %>
+
+    <turbo-frame id="subject_pairs_results" data-turbo-cache="false">
+  <%= render partial: "quality/subject_pairs_results_empty" %>
+</turbo-frame>
+  </div>
+</section>
 
 </div>
